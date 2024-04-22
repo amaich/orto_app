@@ -76,9 +76,9 @@ WSGI_APPLICATION = "orto_app.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "amaich",  # Имя базы данных
-        "USER": "postgres",  # Имя пользователя
-        "PASSWORD": "postgres",  # Пароль пользователя
+        "NAME": "orto_db",  # Имя базы данных
+        "USER": "orto_user",  # Имя пользователя
+        "PASSWORD": "Jk87410523#",  # Пароль пользователя
         "HOST": "46.19.66.6",  # Наименование контейнера для базы данных в Docker Compose
         "PORT": "5432"  # Порт базы данных
     }
