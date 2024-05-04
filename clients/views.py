@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Clients
+from .forms import ClientsForm
 
 
 class ClientsListView(ListView):
@@ -22,16 +23,15 @@ class ClientDetailView(DetailView):
 
 
 class ClientCreateView(CreateView):
-    model = Clients
+    form_class = ClientsForm
     template_name = 'clients/client_create.html'
-    fields = ['fullname', 'birthdate', 'email', 'phonenumber', 'note']
-    success_url = Clients('task_app:task_list')
+    success_url = reverse_lazy('clients:clients_list')
 
 
 class ClientUpdateView(UpdateView):
     model = Clients
+    form_class = ClientsForm
     template_name = 'clients/client_update.html'
-    fields = ['fullname', 'birthdate', 'email', 'phonenumber', 'note']
     context_object_name = 'client'
 
     def get_success_url(self):
@@ -42,7 +42,7 @@ class ClientDeleteView(View):
     def get(self, request, pk):
         client_to_delete = get_object_or_404(Clients, pk=pk)
         client_to_delete.delete()
-        return HttpResponseRedirect(reverse('task_app:task_list'))
+        return HttpResponseRedirect(reverse('clients:clients_list'))
 
 class ClientSearchView(ListView):
     model = Clients

@@ -2,7 +2,7 @@
 {% block content %}
 <form action="{% url 'clients:client_create' %}" method="post">
   {% csrf_token %}
-  {{ form }}
+  {{ form.as_p }}
   <input type="submit" value="save">
 </form>
 {% endblock %}
