@@ -44,3 +44,16 @@ class ClientDeleteView(View):
         client_to_delete.delete()
         return HttpResponseRedirect(reverse('task_app:task_list'))
 
+class ClientSearchView(ListView):
+    model = Clients
+    template_name = 'clients/client_search.html'
+    context_object_name = 'clients'
+
+    def get_queryset(self):
+        return Clients.objects.filter(fullname__icontains=self.request.GET.get('name'))
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientSearchView, self).get_context_data(**kwargs)
+        context['find_name'] = self.request.GET.get('name')
+        return context
+

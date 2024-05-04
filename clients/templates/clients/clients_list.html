@@ -2,7 +2,11 @@
 {% block content %}
 <p><a href="{% url 'clients:client_create' %}">Создать клиента</a></p>
 
-{% for client in clients %}
+<form action="{% url 'clients:client_search' %}" method="get">
+    <input name="name" type="text" placeholder="Поиск">
+    <button type="submit">Поиск</button>
+</form>{% for client in clients %}
+
 <p><a href="{% url 'clients:client_detail' client.id %}">{{ client.fullname }}</a></p>
 {% endfor %}
 {% endblock %}

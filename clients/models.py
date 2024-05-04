@@ -9,3 +9,10 @@ class Clients(models.Model):
     email = models.CharField(max_length=150, blank=True, null=True)
     phonenumber = models.CharField(max_length=20, blank=True, null=True)
     note = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Клиент'
+        verbose_name_plural = 'Клиенты'
+
+    def __str__(self):
+        return self.fullname
