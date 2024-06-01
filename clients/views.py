@@ -5,9 +5,11 @@ from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.decorators.http import require_POST
+
 
 from .models import Clients
-from .forms import ClientsForm
+from .forms import ClientsForm, VisitsForm
 
 
 class ClientsListView(ListView):
@@ -44,6 +46,7 @@ class ClientDeleteView(View):
         client_to_delete.delete()
         return HttpResponseRedirect(reverse('clients:clients_list'))
 
+
 class ClientSearchView(ListView):
     model = Clients
     template_name = 'clients/client_search.html'
@@ -57,3 +60,18 @@ class ClientSearchView(ListView):
         context['find_name'] = self.request.GET.get('name')
         return context
 
+
+@require_POST
+def visit_create(request, client_id):
+    client = get_object_or_404(Clients,
+                               id=client_id)
+
+    visit = None
+    form = ClientsForm(data=request.POST)
+    if form.is_valid():
+        visit = form.save(commit=False)
+        visit.client = client
+        visit.save()
+    return render(request,
+                  'clients/visit_create.html',
+                  {'client': client, 'visit': visit, 'form': form})

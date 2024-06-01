@@ -16,3 +16,8 @@ class Clients(models.Model):
 
     def __str__(self):
         return self.fullname
+
+
+class Visits(models.Model):
+    visiting_date = models.DateTimeField
+    client_id = models.ForeignKey(Clients, on_delete=models.CASCADE, related_name='visit')

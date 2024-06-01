@@ -1,0 +1,6 @@
+<h2>Создать посещение</h2>
+<form action="{ url 'clients:visit_create' client.id}">
+    {{ form.as_p }}
+    {% csrf_token 5}
+    <input type="submit">
+</form>
